@@ -99,14 +99,14 @@ def CalcAngstroemCS(InData, DebugFlag=False, VerboseFlag=False):
 			break
 
 	if LambdaLow > 0. and LambdaHigh > 0:
-		OutData['ang4487aer']={}
-		OutData['ang4487aer']['DimVars']=AODLow['DimVars']
+		OutData['ang4487csaer']={}
+		OutData['ang4487csaer']['DimVars']=AODLow['DimVars']
 
-		OutData['ang4487aer']['data']=CalcAngstroemLL(AODLow['data'], AODHigh['data'], LambdaLow, LambdaHigh)
-		OutData['ang4487aer']['Attributes']={}
-		OutData['ang4487aer']['Attributes']['standard_name']='angstrom_exponent_of_ambient_aerosol_in_air'
-		OutData['ang4487aer']['Attributes']['units']='1'
-		OutData['ang4487aer']['Attributes']['comment']='calculated by the aerocom-data-correction-tools from the variables '+VarLowStr+' and '+VarHighStr
+		OutData['ang4487csaer']['data']=CalcAngstroemLL(AODLow['data'], AODHigh['data'], LambdaLow, LambdaHigh)
+		OutData['ang4487csaer']['Attributes']={}
+		OutData['ang4487csaer']['Attributes']['standard_name']='angstrom_exponent_of_ambient_aerosol_in_air'
+		OutData['ang4487csaer']['Attributes']['units']='1'
+		OutData['ang4487csaer']['Attributes']['comment']='calculated by the aerocom-data-correction-tools from the variables '+VarLowStr+' and '+VarHighStr
 
 		if DebugFlag is True:
 			pdb.set_trace()
@@ -151,26 +151,26 @@ def CalcAngstroemCSForDir(ModelDir, Outdir=None, DebugFlag=False, VerboseFlag=Fa
 	VarsToUseArr=[]
 	#determine the low wavelength aod's name
 	if LambdaLowFlag is False:
-		if 'od550csaer' in Vars:
-			LambdaLowFlag=True
-			VarsToUseArr.append('od550csaer')
-		elif 'od440csaer' in Vars:
+		if 'od440csaer' in Vars:
 			LambdaLowFlag=True
 			VarsToUseArr.append('od440csaer')
+		elif 'od550csaer' in Vars:
+			LambdaLowFlag=True
+			VarsToUseArr.append('od550csaer')
 		if LambdaLowFlag is True and VerboseFlag is True:
 			print('Found low data')
 
 	#determine the high wavelength aod's name
 	if LambdaHighFlag is False:
-		if 'od825csaer' in Vars:
+		if 'od870csaer' in Vars:
 			LambdaHighFlag=True
-			VarsToUseArr.append('od825csaer')
+			VarsToUseArr.append('od870csaer')
 		elif 'od865csaer' in Vars:
 			LambdaHighFlag=True
 			VarsToUseArr.append('od865csaer')
-		elif 'od870csaer' in Vars:
+		elif 'od825csaer' in Vars:
 			LambdaHighFlag=True
-			VarsToUseArr.append('od870csaer')
+			VarsToUseArr.append('od825csaer')
 		if LambdaHighFlag is True and VerboseFlag is True:
 			print('Found high data')
 			

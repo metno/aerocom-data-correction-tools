@@ -150,26 +150,26 @@ def CalcAngstroemForDir(ModelDir, Outdir=None, DebugFlag=False, VerboseFlag=Fals
 	VarsToUseArr=[]
 	#determine the low wavelength aod's name
 	if LambdaLowFlag is False:
-		if 'od550aer' in Vars:
-			LambdaLowFlag=True
-			VarsToUseArr.append('od550aer')
-		elif 'od440aer' in Vars:
+		if 'od440aer' in Vars:
 			LambdaLowFlag=True
 			VarsToUseArr.append('od440aer')
+		elif 'od550aer' in Vars:
+			LambdaLowFlag=True
+			VarsToUseArr.append('od550aer')
 		if LambdaLowFlag is True and VerboseFlag is True:
 			print('Found low data')
 
 	#determine the high wavelength aod's name
 	if LambdaHighFlag is False:
-		if 'od825aer' in Vars:
+		if 'od870aer' in Vars:
 			LambdaHighFlag=True
-			VarsToUseArr.append('od825aer')
+			VarsToUseArr.append('od870aer')
 		elif 'od865aer' in Vars:
 			LambdaHighFlag=True
 			VarsToUseArr.append('od865aer')
-		elif 'od870aer' in Vars:
+		elif 'od825aer' in Vars:
 			LambdaHighFlag=True
-			VarsToUseArr.append('od870aer')
+			VarsToUseArr.append('od825aer')
 		if LambdaHighFlag is True and VerboseFlag is True:
 			print('Found high data')
 			
