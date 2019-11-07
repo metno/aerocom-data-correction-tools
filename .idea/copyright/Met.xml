@@ -1,0 +1,6 @@
+<component name="CopyrightManager">
+  <copyright>
+    <option name="notice" value="Copyright (c) &amp;#36;today.year. Met Norway&#10; Contact information:&#10; Norwegian Meteorological Institute&#10; Box 43 Blindern&#10; 0313 OSLO&#10; NORWAY&#10; E-mail: jan.griesfeller@met.no&#10; This program is free software; you can redistribute it and/or modify&#10; it under the terms of the GNU General Public License as published by&#10; the Free Software Foundation; either version 3 of the License, or&#10; (at your option) any later version.&#10; This program is distributed in the hope that it will be useful,&#10; but WITHOUT ANY WARRANTY; without even the implied warranty of&#10; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the&#10; GNU General Public License for more details.&#10; You should have received a copy of the GNU General Public License&#10; along with this program; if not, write to the Free Software&#10; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,&#10; MA 02110-1301, USA&#10;" />
+    <option name="myName" value="Met" />
+  </copyright>
+</component>
