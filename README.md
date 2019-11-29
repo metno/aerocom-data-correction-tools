@@ -4,7 +4,7 @@ The tools are under development, and aim to correct errors on dimensions, NaN va
 
 Simple nco commands can be found also here: https://wiki.met.no/aerocom/faq-reformatting
 
-How-to-Use: Routines are written in python, read model data and rewrite them according to needs.
+How-to-Use: Routines are written in python3 or bash, read model data and rewrite them according to needs.
 
 Further development: See issues.
 
