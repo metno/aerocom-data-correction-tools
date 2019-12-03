@@ -1,29 +1,16 @@
 #!/bin/bash
+# bash script to convert EMEP model data to aerocom standard
+# the naming convention is according to aerocom phase 2 standard
+# at this point
+# depending on the input file name, this script will perform 
+# a monthly or daily conversion
+
+# it needs the file names vars_sorted.sh in the same directory as itsself
+
+# This script is work in progress and not very sophisticated at this point
 
 SAVEIFS=$IFS
 IFS=$(echo -en "\n\b")
-
-#workdirremote='/global/work/mifahf/DO_AEROCOM/'
-#workdirremote2='/work/mifahf/DO_AEROCOM/'
-
-
-#model=${1}
-#year=${2}
-#projection=${3}
-
-#InputFileName=${model}_day_${year}.nc
-#LatLonInFileName=${model}_day_${year}latlon.nc
-
-#if [ "${projection}" = "lonlat" ]
-#then
-#echo "lon lat grid"
-#LatLonInFileName=$InputFileName
-#else
-#echo "Non regular lon lat grid"
-#fi
-
-
-#GriddescriptionFile='/lustre/storeB/project/aerocom/bin/EECCA50PS.griddes'
 
 if [[ $# -lt 4 ]]
 	then echo "usage: ${0} <input file> <model name> <data year> <output dir>"
@@ -42,103 +29,24 @@ TempFile="${OutDir}/temp.nc"
 #ModelName="EMEP_Reporting_2016_3237"
 # list of variables treated
 # syntax of list elements: first part is aerocom name, second part is emep name
-variablelist=(\
-'sconcpm10=SURF_ug_PM10' \
-'sconcpm10=SURF_ug_PM10rh50' \
-'sconcpm10=SURF_ug_PM10_rh50' \
-'sconcpm25=SURF_ug_PM25' \
-'sconcpm25=SURF_ug_PM25rh50' \
-'sconcpm25=SURF_ug_PM25_rh50' \
-'sconcso2=SURF_ug_SO2' \
-'sconcso2=SURF_ugS_SO2' \
-'sconcso4=SURF_ug_SO4' \
-'sconcso4=SURF_ugS_SO4' \
-'wetso4=WDEP_SOX' \
-'sconcnh3=SURF_ug_NH3' \
-'sconcnh3=SURF_ugN_NH3' \
-'sconcnh4=SURF_ug_NH4_F' \
-'sconcnh4=SURF_ugN_NH4_F' \
-'wetrdn=WDEP_RDN' \
-'sconcrdn=SURF_ugN_RDN' \
-'sconcno=SURF_ug_NO' \
-'sconcno=SURF_ugN_NO' \
-'sconcno2=SURF_ug_NO2' \
-'sconcno2=SURF_ugN_NO2' \
-'sconchno3=SURF_ug_HNO3' \
-'sconchno3=SURF_ugN_HNO3' \
-'sconcno3=SURF_ug_TNO3' \
-'wetoxn=WDEP_OXN' \
-'vmro3max=SURF_MAXO3' \
-'vmro3=SURF_ppb_O3' \
-'vmro32m=SURF_2MO3' \
-'sconcss=SURF_ug_SS' \
-'sconcaeroh2o=SURF_PM25water' \
-'emidust=DUST_flux' \
-'od550aer=AOD' \
-'od350aer=AOD_350nm' \
-'od550aer=AOD_550nm' \
-'od440aer=AOD_440nm' \
-'od870aer=AOD_870nm' \
-'od550ss=AOD_SS_550nm' \
-'od550so4=AOD_SO4_550nm' \
-'od550no3=AOD_TNO3_550nm' \
-'od550nh4=AOD_NH4_F_550nm' \
-'od550oa=AOD_OM25_550nm' \
-'od550bc=AOD_EC_550nm' \
-'od550dust=AOD_DUST_550nm' \
-'od550oa=AOD_OM25_550nm' \
-'od550lt1aer=AOD_PMFINE_550nm' \
-'ec550dryaer=EXTdry_550nm' \
-'ec550aer=EXT_550nm' \
-'absc550dryaer=AbsCoeff' \
-'absc550aer=AbsCoeff' \
-'abs550bc=AAOD_EC_550nm' \
-'abs550aer=AAOD_550nm' \
-'sconcdust=SURF_ug_DUST' \
-'sconcbcf=SURF_ug_ECFINE' \
-'sconcbcc=SURF_ug_ECCOARSE' \
-'sconcoaf=SURF_ug_PART_OM_F' \
-'sconcoac=SURF_ug_OMCOARSE' \
-'z3d=D3_Zmid' \
-'loadso2=COLUMN_SO2_kmax' \
-'loadso4=COLUMN_SO4_kmax' \
-'loadss=COLUMN_SS_kmax' \
-'loadbc=COLUMN_EC_kmax' \
-'loadoa=COLUMN_OM25_kmax' \
-'loaddust=COLUMN_DUST_kmax' \
-'loadno3=COLUMN_TNO3_kmax' \
-'loadnh4=COLUMN_NH4_F_kmax' \
-'wetso2=WDEP_SO2' \
-'wetso4=WDEP_SO4' \
-'wetbc=WDEP_EC' \
-'wetoa=WDEP_OM25' \
-'wetss=WDEP_SS' \
-'wetdust=WDEP_DUST' \
-'wetno3=WDEP_TNO3' \
-'wetnh4=WDEP_NH4_f' \
-'dryso2=DDEP_SO2_m2Grid' \
-'dryso4=DDEP_SO4_m2Grid' \
-'drybc=DDEP_EC_m2Grid' \
-'dryoa=DDEP_OM25_m2Grid' \
-'dryss=DDEP_SS_m2Grid' \
-'drydust=DDEP_DUST_m2Grid' \
-'dryno3=DDEP_TNO3_m2Grid' \
-'drynh4=DDEP_NH4_f_m2Grid' \
-'mmrso2=D3_mmr_SO2' \
-'mmrso4=D3_mmr_SO4' \
-'mmrbc=D3_mmr_EC' \
-'mmroa=D3_mmr_OM25' \
-'mmrss=D3_mmr_SS' \
-'mmrdust=D3_mmr_DUST' \
-'mmrno3=D3_mmr_TNO3' \
-'mmrnh4=D3_mmr_NH4_F' \
-'emisox=Emis_mgm2_sox' \
-'emisnox=Emis_mgm2_nox' \ )
+scriptpath=`realpath ${0}`
+scriptdir=`dirname ${scriptpath}`
+. ${scriptdir}/vars_sorted.sh
 
-month_flag=1
 day_flag=0
+month_flag=0
+testfile=`basename ${InFile} .nc`
+if [[ ${testfile} =~ .*month.* ]]
+	then 
+	month_flag=1
+fi
 
-set -x
+day_flag=0
+if [[ ${testfile} =~ .*day.* ]]
+	then 
+	day_flag=1
+fi
+
 if [ ${month_flag} -gt 0 ]
 	then
    for arg in ${variablelist[*]}
@@ -147,6 +55,9 @@ if [ ${month_flag} -gt 0 ]
       emepvar=`echo ${arg} | cut -d= -f2`
       Tempfile="${OutDir}/"
       OutFile="${OutDir}/aerocom.${ModelName}.monthly.${aerocomvar}.${DataYear}.nc"
+		if [ ${#aerocomvar} -lt 3 ]
+			then exit
+		fi
 		#aerocom3_EMEP_rv4_33_Glob-CTRL_od550aer_Column_2010_monthly.nc
       #OutFile="${OutDir}/aerocom3_${ModelName}_${aerocomvar}_Column_${DataYear}_monthly.nc"
       #REMAP_EXTRAPOLATE='off' cdo remapdis,${GriddescriptionFile} -selname,${emepvar} ${InFile} ${OutFile}
@@ -159,7 +70,6 @@ if [ ${month_flag} -gt 0 ]
          ncrename -v ${emepvar},${aerocomvar} ${OutFile}
       fi
    done
-
 fi
 
 
@@ -180,11 +90,6 @@ if [ ${day_flag} -gt 0 ]
 		else 
 			ncrename -v ${emepvar},${aerocomvar} ${OutFile}
 		fi
-		#if [[ -f ${OutFile} ]]
-			#then
-			#ncrename -v ${emepvar},${aerocomvar} ${OutFile}
-		#fi
-
 	done
 	exit
 
