@@ -1,7 +1,7 @@
 variablelist=('abs550aer=AAOD_550nm' \
 'abs550bc=AAOD_EC_550nm' \
-'absc550aer=AbsCoeff' \
-'absc550dryaer=AbsCoeff' \
+'absc550aer=Abs_coeff' \
+'absc550dryaer=Abs_coeff' \
 'drybc=DDEP_EC_m2Grid' \
 'drydust=DDEP_DUST_m2Grid' \
 'drynh4=DDEP_NH4_f_m2Grid' \
@@ -10,6 +10,9 @@ variablelist=('abs550aer=AAOD_550nm' \
 'dryso2=DDEP_SO2_m2Grid' \
 'dryso4=DDEP_SO4_m2Grid' \
 'dryss=DDEP_SS_m2Grid' \
+'drysox=DDEP_SOX_m2Grid' \
+'dryoxn=DDEP_OXN_m2Grid' \
+'dryrdn=DDEP_RDN_m2Grid' \
 'ec550aer=EXT_550nm' \
 'ec550dryaer=EXTdry_550nm' \
 'emidust=DUST_flux' \
@@ -40,8 +43,7 @@ variablelist=('abs550aer=AAOD_550nm' \
 'od550lt1aer=AOD_PMFINE_550nm' \
 'od550nh4=AOD_NH4_F_550nm' \
 'od550no3=AOD_TNO3_550nm' \
-'od550oa=AOD_OM25_550nm' \
-'od550oa=AOD_OM25_550nm' \
+'od550oa=AOD_OC_550nm' \
 'od550so4=AOD_SO4_550nm' \
 'od550ss=AOD_SS_550nm' \
 'od870aer=AOD_870nm' \
@@ -86,6 +88,6 @@ variablelist=('abs550aer=AAOD_550nm' \
 'wetrdn=WDEP_RDN' \
 'wetso2=WDEP_SO2' \
 'wetso4=WDEP_SO4' \
-'wetso4=WDEP_SOX' \
+'wetsox=WDEP_SOX' \
 'wetss=WDEP_SS' \
 'z3d=D3_Zmid')
